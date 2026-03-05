@@ -1,0 +1,26 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# IDE settingss
+.vscode/
+.idea
+
+# Data and logs (these change frequently and can be large)
+#*.csv
+#*.log
+#logs/
+#quality_reports/
+
+# Sensitive files
+**/config.py
+.env
+
+# OS files
+Thumbs.db
+.DS_Store
