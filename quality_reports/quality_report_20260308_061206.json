@@ -1,0 +1,9 @@
+{
+    "run_id": "5603594e-bf89-4a79-a3a5-45460fa3d584",
+    "valid_rows": 5410,
+    "invalid_rows": 1729,
+    "total_rows": 7139,
+    "rejection_percentage": 24.22,
+    "rejected_rows_file": "logs/rejected_rows_20260308.csv",
+    "run_timestamp": "20260308_061206"
+}
