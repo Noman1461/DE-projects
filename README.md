@@ -5,6 +5,7 @@ A production-style ETL pipeline that transforms messy cafe sales data into clean
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13%2B-orange)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Docker](https://img.shields.io/badge/Docker-Containerized-blue)
 
 ![CafeFlow Architecture](cafeflow.png)
 
@@ -18,7 +19,7 @@ CafeFlow simulates how real companies process raw data safely. It takes messy CS
 - 📝 Logs rejected rows with detailed error tracking
 - 💾 Loads only clean data into PostgreSQL
 - 📊 Generates quality reports for observability
-- 🐳 (Coming soon) Dockerized for portable deployment
+- 🐳 Dockerized with Docker Compose for portable deployment
 
 ---
 
@@ -31,7 +32,7 @@ CafeFlow simulates how real companies process raw data safely. It takes messy CS
 | **Libraries** | psycopg2, pandas, csv |
 | **Logging** | Custom CSV logging |
 | **Reporting** | JSON format |
-| **Container** | Docker (in progress) |
+| **Containerization** | Docker & Docker Compose |
 
 ---
 
@@ -162,6 +163,8 @@ etl_project/
 │   ├── load.py             # Database loading
 │   ├── quality.py          # Quality reporting
 │   └── main.py             # Pipeline orchestrator
+├── Dockerfile
+├── docker-compose.yml      # Multi-container orchestration
 ├── .gitignore
 ├── cafeflow.png            # Architecture diagram
 └── README.md
@@ -189,16 +192,35 @@ Success rate: 83.8%
 ✅ Loaded 5980 rows into database
 ```
 
-## 🐳 Docker Support (Coming Soon)
+## 🐳 Docker Deployment
 
-The pipeline will be containerized for easy deployment:
+CafeFlow is fully containerized using **Docker and Docker Compose**.
 
-- Consistent environment across machines
-- One-command setup
-- No dependency conflicts
+The pipeline runs in two containers:
 
-Stay tuned for updates!
+- **ETL App Container** → Runs the Python pipeline
+- **PostgreSQL Container** → Stores cleaned sales data
 
+### Run the Entire System
+
+```bash
+docker compose up --build
+```
+Docker Compose automatically:
+
+- Builds the ETL application image
+- Starts PostgreSQL database container
+- Initializes database schema using sql/init.sql
+- Runs the ETL pipeline
+- Stores logs and quality reports in mounted volumes
+
+### Services Architecture
+```
+Docker Compose
+│
+├── cafeflow-app (Python ETL Pipeline)
+└── cafeflow-db (PostgreSQL Database)
+```
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to:
