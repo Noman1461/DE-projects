@@ -55,7 +55,7 @@ def main():
     clean_df = transform_data(valid_df)
 
     clean_df.to_csv("data/clean_cafe_sales.csv", index=False)
-    
+
     clean_rows = clean_df.to_dict(orient='records')
 
     load_clean_data(clean_rows) #clean layer

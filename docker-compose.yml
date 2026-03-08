@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: cafeflow-db
+
+    environment:  
+      POSTGRES_DB: sales_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
+
+    restart: always
+
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U postgres"]
+      interval: 1m
+      timeout: 20s
+      retries: 5
+      start_period: 30s
+
+
+  app:
+    build: .
+
+    container_name: cafeflow-app
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    environment:
+      DB_HOST: postgres
+      DB_NAME: sales_db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+
+    volumes:
+      - ./logs:/app/logs
+      - ./quality_reports:/app/quality_reports
+
+    command: python src/main.py
+
+
+volumes:
+  postgres_data:
